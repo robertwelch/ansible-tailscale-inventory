@@ -180,6 +180,7 @@ def assemble_inventory(
         inventory["metadata"][host_data["HostName"]] = {
             "ansible_host": host_data["DNSName"],
             "tailscale_ips": host_data["TailscaleIPs"],
+            **({"ansible_connection": "local"} if host_data["HostName"] == tailscale_self_hostname else {})
         }
 
         # Hosts that are offline will still be present in the inventory. We set-up these
